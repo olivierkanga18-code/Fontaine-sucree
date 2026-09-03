@@ -1241,6 +1241,12 @@ fbq('track', 'PageView');
   }
 
   // ---- Order form -> Google Apps Script ----
+  // ---- ANGLE de cette landing page ----
+  // À changer pour chaque nouvelle idée/angle : c'est la seule chose qui
+  // identifie cette page dans le Sheet, peu importe combien de campagnes
+  // ou d'annonces Meta différentes pointent vers elle.
+  const ANGLE = "Odeur intime - Checklist 4 points";
+
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBODIVWL6p1beV8poW5_pkCc0ltxG4v941kd6Q4wGzdvmeFJq-l-q12f7X3YdrhBpxwg/exec";
 
   const form = document.getElementById('orderForm');
@@ -1257,6 +1263,7 @@ fbq('track', 'PageView');
       ville: form.ville.value.trim(),
       produit: "1 pack (2 sachets)",
       prix: "6500",
+      angle: ANGLE,
       utm_source: urlParams.get('utm_source') || '',
       utm_campaign: urlParams.get('utm_campaign') || '',
       utm_content: urlParams.get('utm_content') || '',
