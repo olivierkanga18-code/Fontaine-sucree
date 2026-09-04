@@ -21,7 +21,13 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '629149229141410');
 fbq('track', 'PageView');
-fbq('track', 'Lead', {value: 6500, currency: 'XOF'});
+
+// event_id transmis par index.html : même identifiant que celui envoyé
+// au CAPI par Code.gs, pour que Meta fusionne les deux signaux en un
+// seul événement au lieu de compter le lead deux fois.
+var fsCapiParams = new URLSearchParams(window.location.search);
+var fsEventId = fsCapiParams.get('event_id') || '';
+fbq('track', 'Lead', {value: 6500, currency: 'XOF'}, fsEventId ? {eventID: fsEventId} : {});
 </script>
 <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=629149229141410&ev=Lead&noscript=1"
