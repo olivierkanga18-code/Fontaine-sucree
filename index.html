@@ -1257,6 +1257,11 @@ fbq('track', 'PageView');
 
     const urlParams = new URLSearchParams(window.location.search);
 
+    // event_id unique pour cette commande : sert à dédupliquer le Lead entre
+    // le Pixel navigateur (déclenché sur merci.html) et le CAPI (déclenché
+    // côté serveur par Code.gs) — sans ça, Meta compterait 2 leads au lieu d'1.
+    const eventId = 'lead-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+
     const payload = {
       nom: form.nom.value.trim(),
       telephone: form.telephone.value.trim(),
@@ -1267,7 +1272,8 @@ fbq('track', 'PageView');
       utm_source: urlParams.get('utm_source') || '',
       utm_campaign: urlParams.get('utm_campaign') || '',
       utm_content: urlParams.get('utm_content') || '',
-      utm_adset: urlParams.get('utm_adset') || ''
+      utm_adset: urlParams.get('utm_adset') || '',
+      event_id: eventId
     };
 
     submitBtn.disabled = true;
@@ -1284,7 +1290,8 @@ fbq('track', 'PageView');
     const redirectParams = new URLSearchParams({
       nom: payload.nom,
       telephone: payload.telephone,
-      ville: payload.ville
+      ville: payload.ville,
+      event_id: eventId
     });
     window.location.href = "merci.html?" + redirectParams.toString();
   });
