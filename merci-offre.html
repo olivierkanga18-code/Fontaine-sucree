@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Dernière étape — Fontaine Sucrée</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f4efe8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel : PageView + Purchase (une seule fois par commande, dédupliqué par event_id) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','629149229141410');
+fbq('track','PageView');
+(function(){
+  var p = new URLSearchParams(location.search);
+  var eventId = p.get('event_id') || '';
+  var prix = parseInt(p.get('prix'), 10);
+  var value = isNaN(prix) ? 6500 : prix;
+  // Pas de Purchase si on arrive sans commande (paramètres absents), ni en double si la page est rechargée
+  if (!p.get('nom') && !eventId) return;
+  var key = 'fs_purchase_' + (eventId || p.get('tel') || '');
+  try { if (sessionStorage.getItem(key)) return; sessionStorage.setItem(key, '1'); } catch(e) {}
+  if (eventId) fbq('track', 'Purchase', {value: value, currency: 'XOF'}, {eventID: eventId});
+  else fbq('track', 'Purchase', {value: value, currency: 'XOF'});
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=629149229141410&ev=PageView&noscript=1" alt=""></noscript>
+
+<style>
+  /* Mêmes couleurs et typo que index.html (Typo 1 : Fraunces + Work Sans) */
+  :root{
+    --navy:#3f4b42;--navy-deep:#2d3630;--copper:#c89b6d;--copper-light:#dfc09b;
+    --cream:#f4efe8;--slate:#4c574f;--white:#FFFFFF;--ink:#17190f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'Work Sans',system-ui,-apple-system,sans-serif;background:var(--navy);color:var(--navy);
+    line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;min-height:100svh;
+    display:flex;flex-direction:column;position:relative;overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:absolute;top:-120px;left:50%;width:380px;height:380px;transform:translateX(-50%);
+    background:radial-gradient(circle, rgba(200,155,109,0.24), transparent 70%);pointer-events:none;
+  }
+  .page{flex:1;width:100%;max-width:460px;margin:0 auto;padding:calc(26px + env(safe-area-inset-top,0px)) 20px 24px;position:relative;z-index:1;display:flex;flex-direction:column;}
+
+  /* Logo */
+  .brand-logo{display:flex;flex-direction:column;align-items:center;line-height:1;margin-bottom:28px;}
+  .brand-logo .bl-row{display:flex;align-items:center;gap:7px;}
+  .brand-logo svg{width:18px;height:18px;fill:var(--copper);}
+  .brand-logo .bl-name{font-family:'Fraunces',serif;font-weight:600;font-size:16.5px;color:var(--cream);text-transform:uppercase;letter-spacing:0.14em;}
+  .brand-logo .bl-sub{font-family:'Fraunces',serif;font-style:italic;font-size:12.5px;color:var(--copper-light);margin-top:5px;letter-spacing:0.06em;}
+
+  /* Confirmation */
+  .head{text-align:center;margin-bottom:24px;}
+  .check{
+    width:58px;height:58px;border-radius:50%;margin:0 auto 16px;background:var(--copper);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 8px rgba(200,155,109,0.16);
+    animation:pop .5s cubic-bezier(.2,.9,.3,1.3) both;
+  }
+  .check svg{width:28px;height:28px;stroke:var(--navy-deep);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;animation:draw .45s .3s ease forwards;}
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  .bravo{font-size:15.5px;font-weight:600;color:var(--copper-light);margin-bottom:10px;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(15px,4.6vw,26px);line-height:1.3;color:var(--cream);margin-bottom:12px;white-space:nowrap;}
+  .hl{background:var(--copper);color:var(--navy-deep);padding:1px 7px;border-radius:6px;white-space:nowrap;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+  .sub{font-size:15px;color:#d6dbd4;max-width:34ch;margin:0 auto;}
+
+  /* Récap */
+  .card{background:var(--white);border-radius:20px;padding:6px 18px;box-shadow:0 24px 50px -30px rgba(0,0,0,0.45);margin-bottom:18px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid rgba(63,75,66,0.1);font-size:15px;}
+  .row:last-child{border-bottom:0;}
+  .row .k{color:var(--slate);flex:none;}
+  .row .v{font-weight:700;color:var(--navy);text-align:right;word-break:break-word;}
+  .row.total .v{font-family:'Fraunces',serif;font-size:20px;}
+  .row.delivery .v{color:#a87a4c;}
+
+  /* Bouton WhatsApp */
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+    background:var(--copper);color:var(--navy-deep);font-weight:800;font-size:17px;
+    padding:18px;border-radius:14px;text-decoration:none;font-family:'Work Sans',sans-serif;
+    box-shadow:0 16px 28px -14px rgba(200,155,109,0.6);
+    animation:pulse 2.4s ease-in-out 1.2s infinite;
+  }
+  .btn svg{width:22px;height:22px;fill:var(--navy-deep);flex:none;}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+  .btn-note{text-align:center;font-size:13.5px;color:#b4bdb5;margin-top:12px;line-height:1.5;}
+  .btn-note b{color:var(--cream);font-weight:600;}
+
+  footer{text-align:center;padding:22px 20px calc(22px + env(safe-area-inset-bottom,0px));position:relative;z-index:1;}
+  footer span{font-family:'Fraunces',serif;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#7d877f;}
+
+  @media (prefers-reduced-motion:reduce){
+    .check,.check svg,.btn{animation:none;}
+    .check svg{stroke-dashoffset:0;}
+  }
+
+  /* ==========================================================
+     VARIANTE COULEURS INVERSÉES : fond crème, carte et bouton sauge foncé
+     ========================================================== */
+  body{background:var(--cream);}
+  body::before{background:radial-gradient(circle, rgba(200,155,109,0.28), transparent 70%);}
+  .brand-logo .bl-name{color:var(--navy);}
+  .brand-logo .bl-sub{color:#a87a4c;}
+  .check{background:var(--navy);box-shadow:0 0 0 8px rgba(63,75,66,0.12);}
+  .check svg{stroke:var(--cream);}
+  .bravo{color:#a87a4c;}
+  h1{color:var(--navy-deep);}
+  .hl{background:var(--copper);color:var(--ink);}
+  .sub{color:var(--slate);}
+  .card{background:var(--navy);box-shadow:0 24px 50px -30px rgba(23,25,15,0.5);}
+  .row{border-bottom-color:rgba(244,239,232,0.14);}
+  .row .k{color:#b4bdb5;}
+  .row .v{color:var(--cream);}
+  .row.delivery .v{color:var(--copper-light);}
+  .btn{background:var(--navy);color:var(--cream);box-shadow:0 16px 28px -14px rgba(63,75,66,0.65);}
+  .btn svg{fill:var(--cream);}
+  .btn-note{color:var(--slate);}
+  .btn-note b{color:var(--navy);}
+  footer span{color:#8a948c;}
+</style>
+</head>
+<body>
+
+<main class="page">
+  <div class="brand-logo" aria-label="Fontaine Sucrée, Renaissance intime">
+    <div class="bl-row">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c-.3 0-.5.1-.7.4C9.6 5.4 5.5 10.6 5.5 14.5a6.5 6.5 0 0 0 13 0c0-3.9-4.1-9.1-5.8-11.6-.2-.3-.4-.4-.7-.4Z"/></svg>
+      <span class="bl-name">Fontaine Sucrée</span>
+    </div>
+    <span class="bl-sub">Renaissance intime</span>
+  </div>
+
+  <div class="head">
+    <div class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <p class="bravo" id="bravo">Bravo, on a bien reçu ta commande 🌸</p>
+    <h1 id="title"><span class="hl">Dernière étape</span> pour valider ta cure</h1>
+    <p class="sub">Écris-nous sur WhatsApp pour confirmer ta commande et recevoir ta posologie.</p>
+  </div>
+
+  <div class="card" id="recap">
+    <div class="row" id="rowLieu"><span class="k">Lieu de livraison</span><span class="v" id="vLieu"></span></div>
+    <div class="row" id="rowQte"><span class="k">Quantité</span><span class="v" id="vQte"></span></div>
+    <div class="row total" id="rowTotal"><span class="k">À payer à la livraison</span><span class="v" id="vTotal"></span></div>
+    <div class="row delivery"><span class="k">Livraison</span><span class="v" id="vLivraison">Sous 24h</span></div>
+  </div>
+
+  <a class="btn" id="waBtn" href="https://wa.me/2250170501516?text=Bonjour%2C%20je%20viens%20de%20passer%20commande%20sur%20le%20site%20Fontaine%20Sucr%C3%A9e%2C%20je%20souhaite%20confirmer%20ma%20cure." target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2Zm5.8 14.04c-.24.68-1.42 1.3-1.95 1.34-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.93.86 2.07.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.71 1.17 1.52 1.89 1.04.93 1.92 1.22 2.19 1.35.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg>
+    Continuer sur WhatsApp
+  </a>
+  <p class="btn-note">Ta commande sera validée <b>dès réception de ton message</b>.<br>Tu paies uniquement à la livraison.</p>
+</main>
+
+<footer><span>Un produit NOVÉA Group</span></footer>
+
+<script>
+  /* Titre sur une seule ligne : la taille s'ajuste à la largeur disponible (max 26px) */
+  const title = document.getElementById("title");
+  function fitTitle(){
+    let size = 26;
+    title.style.fontSize = size + "px";
+    while (title.scrollWidth > title.clientWidth && size > 14) { size -= 0.5; title.style.fontSize = size + "px"; }
+  }
+  fitTitle();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitTitle);
+  window.addEventListener("resize", fitTitle);
+
+  const WHATSAPP = "2250170501516";
+  const p = new URLSearchParams(location.search);
+  const clean = v => (v || "").trim();
+  const nom = clean(p.get("nom"));
+  const tel = clean(p.get("tel"));
+  const lieu = clean(p.get("lieu"));
+  const zone = clean(p.get("zone"));
+  const qte = parseInt(p.get("qte"), 10);
+  const prix = parseInt(p.get("prix"), 10);
+  const fmt = n => n.toLocaleString("fr-FR").replace(/\u202f|\u00a0/g, " ") + " FCFA";
+
+  /* Prénom : premier mot du nom, en majuscule initiale */
+  const prenom = nom ? nom.split(/\s+/)[0] : "";
+  const prenomJoli = prenom ? prenom.charAt(0).toUpperCase() + prenom.slice(1).toLowerCase() : "";
+  if (prenomJoli) document.getElementById("bravo").textContent = `Bravo ${prenomJoli}, on a bien reçu ta commande 🌸`;
+
+  /* Récap : chaque ligne n'apparaît que si l'info existe (jamais de "undefined") */
+  const produit = !isNaN(qte) && qte > 0 ? (qte === 1 ? "1 pack (2 sachets)" : `${qte} packs (${qte * 2} sachets)`) : "";
+  if (lieu) document.getElementById("vLieu").textContent = lieu; else document.getElementById("rowLieu").remove();
+  if (produit) document.getElementById("vQte").textContent = produit; else document.getElementById("rowQte").remove();
+  if (!isNaN(prix) && prix > 0) document.getElementById("vTotal").textContent = fmt(prix); else document.getElementById("rowTotal").remove();
+
+  const vLiv = document.getElementById("vLivraison");
+  if (/hors/i.test(zone)) vLiv.textContent = "Expédition, on organise avec toi";
+  else if (/éloign/i.test(zone)) vLiv.textContent = "Sous 24h (+ 1 500 F inclus)";
+  else if (zone) vLiv.textContent = "Gratuite, sous 24h";
+
+  if (!lieu && !produit && (isNaN(prix) || prix <= 0)) document.getElementById("recap").style.display = "none";
+
+  /* Message WhatsApp pré-rempli avec les infos de la commande */
+  if (nom || tel || lieu) {
+    const lignes = ["Bonjour 🌸, je viens de passer commande sur le site Fontaine Sucrée et je souhaite confirmer ma cure.", ""];
+    if (nom) lignes.push("👤 Nom : " + nom);
+    if (tel) lignes.push("📞 Téléphone : " + tel);
+    if (lieu) lignes.push("📍 Lieu de livraison : " + lieu);
+    if (produit) lignes.push("🛍️ Produit : Fontaine Sucrée, " + produit);
+    if (!isNaN(prix) && prix > 0) lignes.push("💰 Total à payer à la livraison : " + fmt(prix));
+    document.getElementById("waBtn").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lignes.join("\n"))}`;
+  }
+</script>
+</body>
+</html>
